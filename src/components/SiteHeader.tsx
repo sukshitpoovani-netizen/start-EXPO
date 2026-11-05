@@ -1,35 +1,48 @@
 import Link from "next/link";
 
-export function SiteHeader({
-  primary = "#0F172A",
-  secondary = "#F59E0B",
-  name = "Startup Expo 2026",
-}: {
-  primary?: string;
-  secondary?: string;
-  name?: string;
-}) {
+const links = [
+  { href: "/about", label: "About" },
+  { href: "/agenda", label: "Agenda" },
+  { href: "/exhibitors", label: "Exhibitors" },
+  { href: "/speakers", label: "Speakers" },
+  { href: "/sponsors", label: "Sponsors" },
+  { href: "/pitch", label: "Pitch" },
+  { href: "/venue", label: "Venue" },
+];
+
+export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="/" className="text-lg font-bold tracking-tight" style={{ color: primary }}>
-          {name}
+    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
+        <Link href="/" className="shrink-0 text-lg font-bold tracking-tight text-slate-900">
+          Startup Expo <span className="text-amber-500">2026</span>
         </Link>
-        <nav className="hidden items-center gap-8 text-sm font-medium text-slate-600 md:flex">
-          <Link href="/about" className="hover:text-slate-900">About</Link>
-          <Link href="/agenda" className="hover:text-slate-900">Agenda</Link>
-          <Link href="/exhibitors" className="hover:text-slate-900">Exhibitors</Link>
-          <Link href="/speakers" className="hover:text-slate-900">Speakers</Link>
-          <Link href="/venue" className="hover:text-slate-900">Venue</Link>
+        <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 lg:flex">
+          {links.map((l) => (
+            <Link key={l.href} href={l.href} className="hover:text-slate-900 transition">
+              {l.label}
+            </Link>
+          ))}
         </nav>
-        <Link
-          href="/register"
-          className="rounded-lg px-4 py-2 text-sm font-semibold text-slate-900 transition hover:opacity-90"
-          style={{ backgroundColor: secondary }}
-        >
-          Register
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/contact" className="hidden text-sm font-medium text-slate-600 hover:text-slate-900 sm:inline">
+            Contact
+          </Link>
+          <Link
+            href="/register"
+            className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm transition hover:bg-amber-400"
+          >
+            Register
+          </Link>
+        </div>
       </div>
+      <nav className="flex gap-4 overflow-x-auto border-t border-slate-100 px-4 py-2 text-xs font-medium text-slate-600 lg:hidden">
+        {links.map((l) => (
+          <Link key={l.href} href={l.href} className="whitespace-nowrap hover:text-slate-900">
+            {l.label}
+          </Link>
+        ))}
+      </nav>
     </header>
   );
 }
